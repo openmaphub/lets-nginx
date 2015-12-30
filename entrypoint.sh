@@ -88,7 +88,11 @@ http {
   server {
     listen 80;
     server_name "${DOMAIN}";
-    return 301 https://\$server_name\$request_uri;
+    location / {
+      proxy_pass http://${UPSTREAM};
+      proxy_set_header Host \$host;
+      proxy_set_header X-Forwarded-For \$remote_addr;
+    }
   }
 }
 EOF
