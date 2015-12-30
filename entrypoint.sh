@@ -24,6 +24,11 @@ SERVER=""
 # Generate strong DH parameters for nginx, if they don't already exist.
 [ -f /etc/ssl/dhparams.pem ] || openssl dhparam -out /etc/ssl/dhparams.pem 2048
 
+# (re)create nginx cache folder with correct permissions
+rm /var/lib/nginx/tmp/proxy/* -R
+mkdir -p /var/lib/nginx/tmp/proxy
+chown nobody.nobody /var/lib/nginx/tmp/proxy
+
 # Template an nginx.conf
 cat <<EOF >/etc/nginx/nginx.conf
 user nobody;
