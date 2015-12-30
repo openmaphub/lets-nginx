@@ -25,7 +25,7 @@ SERVER=""
 [ -f /etc/ssl/dhparams.pem ] || openssl dhparam -out /etc/ssl/dhparams.pem 2048
 
 # (re)create nginx cache folder with correct permissions
-rm /var/lib/nginx/tmp/proxy/* -R
+rm /var/lib/nginx/tmp/proxy/* -R || true
 mkdir -p /var/lib/nginx/tmp/proxy
 chown nobody.nobody /var/lib/nginx/tmp/proxy
 
