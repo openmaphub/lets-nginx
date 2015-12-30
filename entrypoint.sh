@@ -69,7 +69,7 @@ http {
       proxy_pass http://${UPSTREAM};
       proxy_set_header Host \$host;
       proxy_set_header X-Forwarded-For \$remote_addr;
-      proxy_cache off
+      proxy_cache off;
     }
 
     location /.well-known/acme-challenge {
@@ -88,7 +88,7 @@ http {
       proxy_pass http://${UPSTREAM};
       proxy_set_header Host \$host;
       proxy_set_header X-Forwarded-For \$remote_addr;
-      proxy_cache off
+      proxy_cache off;
     }
   }
 }
