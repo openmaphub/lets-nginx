@@ -28,7 +28,7 @@ SERVER=""
 rm /var/lib/nginx/tmp/proxy/* -R || true
 mkdir -p /var/lib/nginx/
 chown -R nobody.nobody /var/lib/nginx/
-chmod 0750 -R nobody.nobody /var/lib/nginx/
+chmod 0750 -R /var/lib/nginx/
 
 # Template an nginx.conf
 cat <<EOF >/etc/nginx/nginx.conf
