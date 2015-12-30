@@ -28,6 +28,9 @@ SERVER=""
 mkdir -p /var/cache/nginx
 chown nginx:nginx /var/cache/nginx
 
+mkdir -p /var/tmp/nginx
+chown nginx:nginx /var/tmp/nginx
+
 # Template an nginx.conf
 cat <<EOF >/etc/nginx/nginx.conf
 user nginx;
@@ -42,7 +45,7 @@ http {
   default_type application/octet-stream;
 
   proxy_cache_path /var/cache/nginx keys_zone=anonymous:10m;
-  proxy_temp_path /var/cache/nginx;
+  proxy_temp_path /var/tmp/nginx;
 
   sendfile on;
   tcp_nopush on;
