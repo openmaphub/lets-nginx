@@ -41,7 +41,8 @@ http {
   include mime.types;
   default_type application/octet-stream;
 
-
+  proxy_cache_path /var/cache/nginx keys_zone=anonymous:10m;
+  proxy_temp_path /var/cache/nginx;
 
   sendfile on;
   tcp_nopush on;
@@ -76,8 +77,6 @@ http {
       proxy_set_header Host \$host;
       proxy_set_header X-Forwarded-For \$remote_addr;
       proxy_cache   anonymous;
-      proxy_cache_path /var/cache/nginx keys_zone=anonymous:10m;
-      proxy_temp_path /var/cache/nginx;
     }
 
     location /.well-known/acme-challenge {
@@ -97,8 +96,6 @@ http {
       proxy_set_header Host \$host;
       proxy_set_header X-Forwarded-For \$remote_addr;
       proxy_cache   anonymous;
-      proxy_cache_path /var/cache/nginx keys_zone=anonymous:10m;
-      proxy_temp_path /var/cache/nginx;
     }
   }
 }
