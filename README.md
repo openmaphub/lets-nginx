@@ -1,3 +1,12 @@
+*Modified for OpenMapHub Project*
+
+Forked from: https://github.com/smashwilson/lets-nginx
+
+Modifications:
+
+ - Allow proxy of port 80 for mixed mode. Web app will redirect for pages that require https
+ - Fixes nginx proxy permission issues
+
 # Let's Nginx
 
 *[dockerhub build](https://hub.docker.com/r/smashwilson/lets-nginx/)*

@@ -1,5 +1,8 @@
 FROM alpine:3.2
-MAINTAINER Ash Wilson <smashwilson@gmail.com>
+
+#forked from https://github.com/smashwilson/lets-nginx
+MAINTAINER Kristofor Carle kris@openmaphub.org>
+
 
 RUN apk add --update nginx \
   python python-dev py-pip \
