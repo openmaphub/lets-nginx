@@ -26,7 +26,7 @@ SERVER=""
 
 
 mkdir -p /var/cache/nginx
-useradd nginx
+adduser -S nginx
 chown nginx:nginx /var/cache/nginx
 
 # Template an nginx.conf
