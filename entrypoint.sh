@@ -46,6 +46,10 @@ http {
 
   proxy_cache_path /var/cache/nginx keys_zone=anonymous:10m;
   proxy_temp_path /var/tmp/nginx;
+  client_body_temp_path /var/tmp/nginx/client_body_temp;
+  proxy_request_buffering off;
+
+  client_max_body_size 300M;
 
   sendfile on;
   tcp_nopush on;
