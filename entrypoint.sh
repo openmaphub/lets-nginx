@@ -71,8 +71,8 @@ http {
     ssl_prefer_server_ciphers on;
     ssl_session_cache shared:SSL:10m;
     #add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; preload";
-    add_header X-Frame-Options DENY;
-    add_header X-Content-Type-Options nosniff;
+    #add_header X-Frame-Options DENY;
+    #add_header X-Content-Type-Options nosniff;
     ssl_session_tickets off;
     ssl_stapling on;
     ssl_stapling_verify on;
