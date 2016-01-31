@@ -22,7 +22,24 @@ SERVER=""
 [ -n "${STAGING:-}" ] && SERVER="--server https://acme-staging.api.letsencrypt.org/directory"
 
 # Generate strong DH parameters for nginx, if they don't already exist.
-[ -f /etc/ssl/dhparams.pem ] || openssl dhparam -out /etc/ssl/dhparams.pem 2048
+if [ ! -f /etc/ssl/dhparams.pem ]; then
+  if [ -f /cache/dhparams.pem ]; then
+    cp /cache/dhparams.pem /etc/ssl/dhparams.pem
+  else
+    openssl dhparam -out /etc/ssl/dhparams.pem 2048
+    # Cache to a volume for next time?
+    if [ -d /cache ]; then
+      cp /etc/ssl/dhparams.pem /cache/dhparams.pem
+    fi
+  fi
+fi
+
+#create temp file storage
+mkdir -p /var/cache/nginx
+chown nginx:nginx /var/cache/nginx
+
+mkdir -p /var/tmp/nginx
+chown nginx:nginx /var/tmp/nginx
 
 
 mkdir -p /var/cache/nginx
@@ -43,6 +60,9 @@ events {
 http {
   include mime.types;
   default_type application/octet-stream;
+
+  proxy_cache_path /var/cache/nginx keys_zone=anonymous:10m;
+  proxy_temp_path /var/tmp/nginx;
 
   proxy_cache_path /var/cache/nginx keys_zone=anonymous:10m;
   proxy_temp_path /var/tmp/nginx;
@@ -112,12 +132,14 @@ http {
 }
 EOF
 
-# Initial certificate request
-letsencrypt certonly \
-  --domain ${DOMAIN} \
-  --authenticator standalone \
-  ${SERVER} \
-  --email "${EMAIL}" --agree-tos
+# Initial certificate request, but skip if cached
+if [ ! -f /etc/letsencrypt/live/${DOMAIN}/fullchain.pem ]; then
+  letsencrypt certonly \
+    --domain ${DOMAIN} \
+    --authenticator standalone \
+    ${SERVER} \
+    --email "${EMAIL}" --agree-tos
+fi
 
 # Template a cronjob to reissue the certificate with the webroot authenticator
 cat <<EOF >/etc/periodic/monthly/reissue
@@ -141,5 +163,6 @@ chmod +x /etc/periodic/monthly/reissue
 # Background the process and log to stderr
 /usr/sbin/crond -f -d 8 &
 
+echo Ready
 # Launch nginx in the foreground
 /usr/sbin/nginx -g "daemon off;"
