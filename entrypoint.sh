@@ -75,8 +75,8 @@ http {
   error_log /var/log/nginx/error.log;
 
   upstream maphubs {
-    server ${MAPHUBS_1_ENV_TUTUM_CONTAINER_HOSTNAME}:${MAPHUBS_1_ENV_OMH_INTERNAL_PORT};
-    server ${MAPHUBS_2_ENV_TUTUM_CONTAINER_HOSTNAME}:${MAPHUBS_2_ENV_OMH_INTERNAL_PORT};
+    server ${MAPHUBS_1_PORT_4000_TCP_ADDR}:4000;
+    server ${MAPHUBS_2_PORT_4000_TCP_ADDR}:4000;
   }
 
   server {
