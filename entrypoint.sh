@@ -7,7 +7,6 @@ set -euo pipefail
 MISSING=""
 
 [ -z "${DOMAIN}" ] && MISSING="${MISSING} DOMAIN"
-[ -z "${UPSTREAM}" ] && MISSING="${MISSING} UPSTREAM"
 [ -z "${EMAIL}" ] && MISSING="${MISSING} EMAIL"
 
 if [ "${MISSING}" != "" ]; then
@@ -75,6 +74,12 @@ http {
   access_log /var/log/nginx/access.log;
   error_log /var/log/nginx/error.log;
 
+  upstream maphubs {
+        server ${MAPHUBS_1_ENV_TUTUM_CONTAINER_HOSTNAME}:${MAPHUBS_1_ENV_OMH_INTERNAL_PORT};
+        server ${MAPHUBS_2_ENV_TUTUM_CONTAINER_HOSTNAME}:${MAPHUBS_2_ENV_OMH_INTERNAL_PORT};
+        server ${MAPHUBS_3_ENV_TUTUM_CONTAINER_HOSTNAME}:${MAPHUBS_3_ENV_OMH_INTERNAL_PORT};
+    }
+
   server {
     listen 443 ssl;
     server_name "${DOMAIN}";
@@ -97,7 +102,7 @@ http {
     root /etc/letsencrypt/webrootauth;
 
     location / {
-      proxy_pass http://${UPSTREAM};
+      proxy_pass http://maphubs;
       proxy_set_header Host \$host;
       proxy_set_header X-Real-IP \$remote_addr;
       proxy_set_header X-Forwarded-For \$remote_addr;
@@ -120,7 +125,7 @@ http {
     listen 80;
     server_name "${DOMAIN}";
     location / {
-      proxy_pass http://${UPSTREAM};
+      proxy_pass http://maphubs;
       proxy_set_header Host \$host;
       proxy_set_header X-Real-IP \$remote_addr;
       proxy_set_header X-Forwarded-For \$remote_addr;
