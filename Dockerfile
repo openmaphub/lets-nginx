@@ -1,4 +1,4 @@
-FROM alpine:3.2
+FROM alpine:3.3
 
 #forked from https://github.com/smashwilson/lets-nginx
 MAINTAINER Kristofor Carle kris@openmaphub.org>
