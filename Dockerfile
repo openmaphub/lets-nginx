@@ -55,6 +55,7 @@ RUN mkdir -p /tmp/src && \
         --with-http_v2_module && \
     make && \
     make install && \
+    adduser -D nginx && \
     apk del build-base && \
     rm -rf /tmp/src && \
     rm -rf /var/cache/apk/*
