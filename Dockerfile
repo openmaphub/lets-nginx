@@ -9,8 +9,9 @@ RUN apk add --update \
   python python-dev py-pip \
   gcc musl-dev linux-headers \
   augeas-dev openssl-dev libffi-dev ca-certificates dialog \
-  pcre-dev zlib-dev wget build-base \
-  mkdir -p /tmp/src && \
+  pcre-dev zlib-dev wget build-base 
+
+RUN mkdir -p /tmp/src && \
     cd /tmp/src && \
     wget http://nginx.org/download/${NGINX_VERSION}.tar.gz && \
     tar -zxvf ${NGINX_VERSION}.tar.gz && \
