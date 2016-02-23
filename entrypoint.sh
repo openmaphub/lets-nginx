@@ -110,7 +110,7 @@ http {
       proxy_set_header X-Real-IP \$remote_addr;
       proxy_set_header X-Forwarded-For \$remote_addr;
       proxy_set_header X-Forwarded-Proto \$scheme;
-      proxy_cache   anonymous;
+      proxy_cache   off;
       proxy_read_timeout 600s;
       proxy_send_timeout 600s;
     }
@@ -121,7 +121,7 @@ http {
       proxy_set_header X-Real-IP \$remote_addr;
       proxy_set_header X-Forwarded-For \$remote_addr;
       proxy_set_header X-Forwarded-Proto \$scheme;
-      proxy_cache   anonymous;
+      proxy_cache   off;
       proxy_read_timeout 600s;
       proxy_send_timeout 600s;
     }
@@ -144,7 +144,7 @@ http {
       proxy_set_header X-Real-IP \$remote_addr;
       proxy_set_header X-Forwarded-For \$remote_addr;
       proxy_set_header X-Forwarded-Proto \$scheme;
-      proxy_cache   anonymous;
+      proxy_cache   off;
       proxy_read_timeout 600s;
       proxy_send_timeout 600s;
     }
@@ -155,7 +155,7 @@ http {
       proxy_set_header X-Real-IP \$remote_addr;
       proxy_set_header X-Forwarded-For \$remote_addr;
       proxy_set_header X-Forwarded-Proto \$scheme;
-      proxy_cache   anonymous;
+      proxy_cache   off;
       proxy_read_timeout 600s;
       proxy_send_timeout 600s;
     }
