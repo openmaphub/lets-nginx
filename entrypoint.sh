@@ -79,6 +79,10 @@ http {
     server ${MAPHUBS_2_PORT_4000_TCP_ADDR}:4000;
   }
 
+  upstream tiles {
+    server ${TILES_1_PORT_4001_TCP_ADDR}:4001;
+  }
+
   server {
     listen 443 ssl http2;
     server_name "${DOMAIN}";
@@ -111,6 +115,17 @@ http {
       proxy_send_timeout 600s;
     }
 
+    location /tiles {
+      proxy_pass http://tiles;
+      proxy_set_header Host \$host;
+      proxy_set_header X-Real-IP \$remote_addr;
+      proxy_set_header X-Forwarded-For \$remote_addr;
+      proxy_set_header X-Forwarded-Proto \$scheme;
+      proxy_cache   anonymous;
+      proxy_read_timeout 600s;
+      proxy_send_timeout 600s;
+    }
+
     location /.well-known/acme-challenge {
       alias /etc/letsencrypt/webrootauth/.well-known/acme-challenge;
       location ~ /.well-known/acme-challenge/(.*) {
@@ -125,6 +140,17 @@ http {
     server_name "${DOMAIN}";
     location / {
       proxy_pass http://maphubs;
+      proxy_set_header Host \$host;
+      proxy_set_header X-Real-IP \$remote_addr;
+      proxy_set_header X-Forwarded-For \$remote_addr;
+      proxy_set_header X-Forwarded-Proto \$scheme;
+      proxy_cache   anonymous;
+      proxy_read_timeout 600s;
+      proxy_send_timeout 600s;
+    }
+
+    location /tiles {
+      proxy_pass http://tiles;
       proxy_set_header Host \$host;
       proxy_set_header X-Real-IP \$remote_addr;
       proxy_set_header X-Forwarded-For \$remote_addr;
