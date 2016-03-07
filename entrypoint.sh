@@ -81,6 +81,7 @@ http {
 
   upstream tiles {
     server ${TILES_1_PORT_4001_TCP_ADDR}:4001;
+    server ${TILES_1_PORT_4001_TCP_ADDR}:4001;
   }
 
   server {
