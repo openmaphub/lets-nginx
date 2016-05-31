@@ -83,7 +83,12 @@ http {
     server ${TILES_1_PORT_4001_TCP_ADDR}:4001;
     server ${TILES_2_PORT_4001_TCP_ADDR}:4001;
   }
-  
+
+  upstream raster {
+    server ${RASTER_1_PORT_8081_TCP_ADDR}:8081;
+    server ${RASTER_2_PORT_8081_TCP_ADDR}:8081;
+  }
+
   server {
     listen 443 ssl http2;
     server_name "${DOMAIN}";
@@ -127,6 +132,17 @@ http {
       proxy_send_timeout 600s;
     }
 
+    location /raster {
+      proxy_pass http://raster;
+      proxy_set_header Host \$host;
+      proxy_set_header X-Real-IP \$remote_addr;
+      proxy_set_header X-Forwarded-For \$remote_addr;
+      proxy_set_header X-Forwarded-Proto \$scheme;
+      proxy_cache   off;
+      proxy_read_timeout 600s;
+      proxy_send_timeout 600s;
+    }
+
     location /.well-known/acme-challenge {
       alias /etc/letsencrypt/webrootauth/.well-known/acme-challenge;
       location ~ /.well-known/acme-challenge/(.*) {
@@ -152,6 +168,17 @@ http {
 
     location /tiles {
       proxy_pass http://tiles;
+      proxy_set_header Host \$host;
+      proxy_set_header X-Real-IP \$remote_addr;
+      proxy_set_header X-Forwarded-For \$remote_addr;
+      proxy_set_header X-Forwarded-Proto \$scheme;
+      proxy_cache   off;
+      proxy_read_timeout 600s;
+      proxy_send_timeout 600s;
+    }
+
+    location /raster {
+      proxy_pass http://raster;
       proxy_set_header Host \$host;
       proxy_set_header X-Real-IP \$remote_addr;
       proxy_set_header X-Forwarded-For \$remote_addr;
