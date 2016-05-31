@@ -86,7 +86,6 @@ http {
 
   upstream raster {
     server ${RASTER_1_PORT_8081_TCP_ADDR}:8081;
-    server ${RASTER_2_PORT_8081_TCP_ADDR}:8081;
   }
 
   server {
