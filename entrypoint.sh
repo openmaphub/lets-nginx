@@ -132,7 +132,7 @@ http {
     }
 
     location /raster {
-      rewrite /raster(.*) /$1  break;
+      rewrite /raster(.*) /\$1  break;
       proxy_pass http://raster;
       proxy_redirect off;
       proxy_set_header Host \$host;
@@ -179,7 +179,7 @@ http {
     }
 
     location /raster {
-      rewrite /raster(.*) /$1  break;
+      rewrite /raster(.*) /\$1  break;
       proxy_pass http://raster;
       proxy_redirect off;
       proxy_set_header Host \$host;
