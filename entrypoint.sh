@@ -132,7 +132,9 @@ http {
     }
 
     location /raster {
+      rewrite /raster(.*) /$1  break;
       proxy_pass http://raster;
+      proxy_redirect off;
       proxy_set_header Host \$host;
       proxy_set_header X-Real-IP \$remote_addr;
       proxy_set_header X-Forwarded-For \$remote_addr;
@@ -177,7 +179,9 @@ http {
     }
 
     location /raster {
+      rewrite /raster(.*) /$1  break;
       proxy_pass http://raster;
+      proxy_redirect off;
       proxy_set_header Host \$host;
       proxy_set_header X-Real-IP \$remote_addr;
       proxy_set_header X-Forwarded-For \$remote_addr;
