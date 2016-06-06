@@ -190,6 +190,13 @@ http {
       proxy_read_timeout 600s;
       proxy_send_timeout 600s;
     }
+
+    location /.well-known/acme-challenge {
+      alias /etc/letsencrypt/webrootauth/.well-known/acme-challenge;
+      location ~ /.well-known/acme-challenge/(.*) {
+        add_header Content-Type application/jose+json;
+      }
+    }
   }
 }
 EOF
