@@ -1,15 +1,15 @@
-FROM alpine:3.3
+FROM alpine:3.4
 
 #forked from https://github.com/smashwilson/lets-nginx
 MAINTAINER Kristofor Carle kris@maphubs.com>
 
-ENV NGINX_VERSION nginx-1.10.0
+ENV NGINX_VERSION nginx-1.11.5
 
 RUN apk add --update \
   python python-dev py-pip \
   gcc musl-dev linux-headers \
-  augeas-dev openssl-dev libffi-dev ca-certificates dialog \
-  pcre-dev zlib-dev wget build-base 
+  augeas-dev openssl openssl-dev libffi-dev ca-certificates dialog \
+  pcre-dev zlib-dev wget build-base
 
 RUN mkdir -p /tmp/src && \
     cd /tmp/src && \
