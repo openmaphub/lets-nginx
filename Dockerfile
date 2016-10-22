@@ -68,6 +68,7 @@ RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
 VOLUME ["/var/log/nginx"]
 VOLUME ["/etc/letsencrypt/"]
+VOLUME ["/cache"]
 
 # used for webroot reauth
 RUN mkdir -p /etc/letsencrypt/webrootauth
