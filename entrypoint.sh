@@ -92,8 +92,8 @@ http {
     listen 443 ssl http2;
     server_name "${DOMAIN}";
 
-    ssl_certificate /etc/letsencrypt/live/mapforenvironment.org/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/mapforenvironment.org/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
     ssl_dhparam /etc/ssl/dhparams.pem;
 
     ssl_ciphers "ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA";
@@ -162,10 +162,9 @@ http {
 EOF
 TERM=xterm
 # Initial certificate request, but skip if cached
-if [ ! -f /etc/letsencrypt/live/mapforenvironment.org/fullchain.pem ]; then
+if [ ! -f /etc/letsencrypt/live/${DOMAIN}/fullchain.pem ]; then
   letsencrypt certonly \
-    --domain mapforenvironment.org \
-    --domain new.mapforenvironment.org \
+    --domain ${DOMAIN} \
     --authenticator standalone \
     ${SERVER} \
     --email "${EMAIL}" --agree-tos --text --non-interactive
@@ -180,8 +179,7 @@ TERM=xterm
 
 # Certificate reissue
 letsencrypt certonly --renew-by-default \
-  --domain mapforenvironment.org \
-  --domain new.mapforenvironment.org \
+  --domain "${DOMAIN}" \
   --authenticator webroot \
   --webroot-path /etc/letsencrypt/webrootauth/ ${SERVER} \
   --email "${EMAIL}" --agree-tos --text --non-interactive
