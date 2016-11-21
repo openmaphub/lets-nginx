@@ -3,7 +3,7 @@ FROM alpine:3.4
 #forked from https://github.com/smashwilson/lets-nginx
 MAINTAINER Kristofor Carle kris@maphubs.com>
 
-ENV NGINX_VERSION nginx-1.11.5
+ENV NGINX_VERSION nginx-1.11.6
 
 RUN apk add --update \
   python python-dev py-pip \
