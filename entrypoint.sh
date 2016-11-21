@@ -74,6 +74,10 @@ http {
   access_log /var/log/nginx/access.log;
   error_log /var/log/nginx/error.log;
 
+  gzip on;
+  gzip_types text/plain image/png image/jpg application/javascript text/css text/html;
+
+
   upstream maphubs {
     server ${MAPHUBS_1_PORT_4000_TCP_ADDR}:4000;
     server ${MAPHUBS_2_PORT_4000_TCP_ADDR}:4000;
