@@ -88,6 +88,10 @@ http {
     server ${RASTER_1_PORT_8081_TCP_ADDR}:8081;
   }
 
+  upstream assets {
+    server ${ASSETS_1_PORT_80_TCP_ADDR}:80;
+  }
+
   server {
     listen 443 ssl http2;
     server_name "${DOMAIN}";
@@ -144,6 +148,18 @@ http {
       proxy_cache   off;
       proxy_read_timeout 600s;
       proxy_send_timeout 600s;
+    }
+
+    location /assets {
+      proxy_pass http://assets;
+    }
+
+    location /public {
+      proxy_pass http://assets;
+    }
+
+    location /iD {
+      proxy_pass http://assets;
     }
 
     location /.well-known/acme-challenge {
