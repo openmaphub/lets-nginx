@@ -128,6 +128,7 @@ http {
       proxy_cache   off;
       proxy_read_timeout 600s;
       proxy_send_timeout 600s;
+      gzip off;
     }
 
     location /tiles {
@@ -139,6 +140,7 @@ http {
       proxy_cache   off;
       proxy_read_timeout 600s;
       proxy_send_timeout 600s;
+      gzip off;
     }
 
     location /raster {
