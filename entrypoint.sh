@@ -200,7 +200,7 @@ cat <<EOF >/etc/periodic/monthly/reissue
 
 set -euo pipefail
 TERM=xterm
-
+mkdir -p /etc/letsencrypt/webrootauth
 # Certificate reissue
 letsencrypt certonly --renew-by-default \
   --domain "${DOMAIN}" \
